@@ -49,6 +49,8 @@ kubectl apply -f https://raw.githubusercontent.com/scriptcamp/kubeadm-scripts/ma
 
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml
 
+
+
 # Create Dashboard User
 
 cat <<EOF | kubectl apply -f -
@@ -83,5 +85,5 @@ sudo chown 1000:1000 /home/vagrant/.kube/config
 EOF
 
 
-
+kubectl -n kube-system rollout restart deployment coredns
 
