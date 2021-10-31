@@ -35,10 +35,11 @@ chmod +x /vagrant/configs/join.sh
 kubeadm token create --print-join-command > /vagrant/configs/join.sh
 
 # Install Calico Network Plugin
+#curl https://docs.projectcalico.org/manifests/calico.yaml -O
+#kubectl apply -f calico.yaml
 
-curl https://docs.projectcalico.org/manifests/calico.yaml -O
-
-kubectl apply -f calico.yaml
+# Weave 
+kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
 
 # Install Metrics Server
 
