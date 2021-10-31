@@ -38,9 +38,11 @@ cp config ~/.kube/
 
 ## Kubernetes Dashboard URL
 
-```shell
-http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/#/overview?namespace=kubernetes-dashboard
 ```
+kubectl port-forward service/kubernetes-dashboard 21420:443 -n kubernetes-dashboard --address 0.0.0.0
+```
+
+access the dashboard via https://localhost:21420/
 
 ## Kubernetes login token
 
