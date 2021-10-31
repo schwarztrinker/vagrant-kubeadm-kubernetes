@@ -1,9 +1,11 @@
 Vagrant.configure("2") do |config|
+
+    config.vm.boot_timeout = 600
+
     config.vm.provision "shell", inline: <<-SHELL
         apt-get update -y
         echo "10.0.0.10  master-node" >> /etc/hosts
         echo "10.0.0.11  worker-node01" >> /etc/hosts
-        echo "10.0.0.12  worker-node02" >> /etc/hosts
     SHELL
     
     config.vm.define "master" do |master|
@@ -18,7 +20,7 @@ Vagrant.configure("2") do |config|
       master.vm.provision "shell", path: "scripts/master.sh"
     end
 
-    (1..2).each do |i|
+    (1..1).each do |i|
   
     config.vm.define "node0#{i}" do |node|
       node.vm.box = "bento/ubuntu-18.04"
@@ -32,5 +34,10 @@ Vagrant.configure("2") do |config|
       node.vm.provision "shell", path: "scripts/node.sh"
     end
     
+    end
+
+    config.vm.provider :virtualbox do |v|
+      v.customize ["modifyvm", :id, "--uart1", "0x3F8", "4"]
+      v.customize ["modifyvm", :id, "--uartmode1", "file", File::NULL]
     end
   end
